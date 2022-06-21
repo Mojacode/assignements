@@ -40,15 +40,15 @@ def login():
     if not bcrypt.check_password_hash(user.password, request.form['password']):
         flash("Invalid Password")
         return redirect('/')
-    session['id'] = user.id
+    session['user_id'] = user.id
     return redirect('/dashboard')
 
 @app.route('/dashboard')
 def dashboard():
-    if 'id' not in session:
+    if 'user_id' not in session:
         return redirect('/')
     data = {
-        'id' : session['id']  
+        'id' : session['user_id']  
     }
     return render_template('dashboard.html', user = User.get_id(data), recipes = Recipe.get_all(data) )
 

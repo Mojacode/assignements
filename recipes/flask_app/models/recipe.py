@@ -18,6 +18,11 @@ class Recipe:
     def save_recipe(cls,data):
         query = "INSERT INTO recipes (name, description, instruction , under30, datemade , users_id, created_at, updated_at) VALUES (%(name)s,%(description)s,%(instruction)s ,%(under30)s, %(datemade)s, %(users_id)s, NOW(),NOW());"
         return connectToMySQL("register").query_db(query, data)
+
+    @classmethod
+    def update_recipe(cls,data):
+        query = "UPDATE recipes SET name=%(name)s, description=%(description)s, instruction=%(instruction)s, under30=%(under30)s, datemade=%(datemade)s, updated_at= NOW() WHERE id = %(id)s;"
+        return connectToMySQL("register").query_db(query, data)
     
     @classmethod
     def get_all(cls, data):
@@ -34,6 +39,11 @@ class Recipe:
         query = "SELECT * from recipes WHERE id = %(id)s;"
         results = connectToMySQL("register").query_db(query,data)
         return cls(results[0])
+
+    @classmethod
+    def delete(cls,data):
+        query = "DELETE FROM recipes WHERE id = %(id)s;"
+        return connectToMySQL('register').query_db(query,data)
 
 
 
